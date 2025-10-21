@@ -111,19 +111,19 @@ app.post("/orders", (req, res) => {
 
   //check items availability
   for (const item of items) {
-    // if (!item.id ||!Number.isInteger(item.id) 
-    //   ||!item.qty ||!Number.isInteger(item.qty) ||item.qty <= 0
-    // ) {
-    //   return res.status(400).json({ error: "Invalid item id or qty" });
-    // }
+    if (!item.id ||!Number.isInteger(item.id) 
+      ||!item.qty ||!Number.isInteger(item.qty) ||item.qty <= 0
+    ) {
+      return res.status(400).json({ error: "Invalid item id or qty" });
+    }
     const menuItem = menu.find(m => m.id === item.id);
-    // if (!menuItem) {
-    //   return res.status(400).json({ error: `Item with id ${item.id} not found` });
-    // }
+    if (!menuItem) {
+      return res.status(400).json({ error: `Item with id ${item.id} not found` });
+    }
 
-    // if (menuItem.stock < item.qty) {
-    //   return res.status(400).json({ error: `Not enough stock for item ${menuItem.name}` });
-    // }
+    if (menuItem.stock < item.qty) {
+      return res.status(400).json({ error: `Not enough stock for item ${menuItem.name}` });
+    }
 
     const itemTotal = menuItem.price * item.qty;
 
